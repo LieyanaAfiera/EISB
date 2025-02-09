@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Order</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        // Function to format the input field to mm-yy
+        function enforceMMYYFormat(input) {
+            const value = input.value.replace(/[^0-9]/g, ''); // Allow only numbers
+            if (value.length <= 2) {
+                input.value = value; // Just the month
+            } else if (value.length <= 4) {
+                input.value = value.slice(0, 2) + '-' + value.slice(2); // Month-Year
+            } else {
+                input.value = value.slice(0, 2) + '-' + value.slice(2, 4); // Truncate extra digits
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Edit Order</h1>
+        <form method="POST">
+            <input type="hidden" name="index" value="{{ order['index'] }}">
+            <div class="form-group">
+                <label for="month">Date (mm-yy)</label>
+                <input type="text" class="form-control" id="month" name="month" 
+                       value="{{ order['Month'] }}" required 
+                       placeholder="mm-yy" maxlength="5" oninput="enforceMMYYFormat(this)">
+            </div>
+            
+            <div class="form-group">
+                <label for="product_code">Product Code</label>
+                <input type="text" class="form-control" id="product_code" name="product_code" 
+                       value="{{ order['Product Code'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="customer">Customer</label>
+                <input type="text" class="form-control" id="customer" name="customer" 
+                       value="{{ order['Customer'] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="qty">Quantity (pcs)</label>
+                <input type="text" class="form-control" id="qty" name="qty" 
+                       value="{{ order['Qty (pcs)'] }}" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Order</button>
+        </form>
+    </div>
+</body>
+</html>

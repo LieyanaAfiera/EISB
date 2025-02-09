@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Order</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            min-height: 100vh;
+            position: relative;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            background-color: #ffffff;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-radius: 15px 15px 0 0;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+        }
+        .btn-primary {
+            border-radius: 8px;
+            padding: 12px;
+            font-weight: 600;
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .back-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                Add New Order
+            </div>
+            <form method="POST">
+                <!-- Date Field -->
+                <div class="form-group">
+                    <label for="month">Date (mm-yy)</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="month" 
+                        name="month" 
+                        placeholder="mm-yy" 
+                        pattern="^(0[1-9]|1[0-2])-\d{2}$" 
+                        title="Please enter the date in mm-yy format (e.g., 01-23)" 
+                        required>
+                </div>
+
+                <!-- Product Code Dropdown -->
+                <div class="form-group">
+                    <label for="product_code">Product Code</label>
+                    <select class="form-control" id="product_code" name="product_code" required>
+                        {% for code in product_codes %}
+                            <option value="{{ code }}">{{ code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Customer Dropdown -->
+                <div class="form-group">
+                    <label for="customer">Customer</label>
+                    <select class="form-control" id="customer" name="customer" required>
+                        {% for customer in customers %}
+                            <option value="{{ customer }}">{{ customer }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Quantity Field -->
+                <div class="form-group">
+                    <label for="qty">Quantity (pcs)</label>
+                    <input type="number" class="form-control" id="qty" name="qty" placeholder="Enter quantity" required>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block">Add Order</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="back-btn">
+        <a href="/" class="btn btn-secondary">Back to Home</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

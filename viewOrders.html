@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Orders</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Roboto', sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin-top: 40px;
+        }
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .card {
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+        .btn {
+            font-weight: 600;
+        }
+        .btn-primary {
+            background-color: #007bff;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .table th {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+        }
+        .table td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Orders</h1>
+    <a href="/" class="btn btn-secondary mb-4">Back to Home</a>
+
+    <!-- Filter Form -->
+    <div class="card">
+        <form method="GET" action="/view_orders">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="filter_date">Filter by Date</label>
+                    <input type="month" id="filter_date" name="filter_date" class="form-control" value="{{ filter_date or '' }}">
+                </div>
+                
+                <div class="form-group col-md-4">
+                    <label for="filter_product_code">Filter by Product Code</label>
+                    <select id="filter_product_code" name="filter_product_code" class="form-control">
+                        <option value="">Select Product Code</option>
+                        {% for product_code in product_codes %}
+                            <option value="{{ product_code }}" {% if product_code == filter_product_code %}selected{% endif %}>{{ product_code }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="filter_customer">Filter by Customer</label>
+                    <select id="filter_customer" name="filter_customer" class="form-control">
+                        <option value="">Select Customer</option>
+                        {% for customer in customers %}
+                            <option value="{{ customer }}" {% if customer == filter_customer %}selected{% endif %}>{{ customer }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a href="/view_orders" class="btn btn-secondary">Reset</a>
+        </form>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="card mt-4">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Product Code</th>
+                    <th>Customer</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td>{{ order['Month'][:7] }}</td>
+                        <td>{{ order['Product Code'] }}</td>
+                        <td>{{ order['Customer'] }}</td>
+                        <td>{{ order['Qty (pcs)'] }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_order', index=loop.index0) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ url_for('delete_order') }}" method="POST" style="display:inline-block;" onsubmit="return confirmDelete();">
+                                <input type="hidden" name="index" value="{{ loop.index0 }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- JavaScript for confirmation -->
+<script type="text/javascript">
+    function confirmDelete() {
+        return confirm("Are you sure you want to delete this order? This action cannot be undone.");
+    }
+</script>
+</body>
+</html>

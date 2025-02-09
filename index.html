@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #e0f7fa, #e8ea80);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 50px;
+            max-width: 1200px;
+            margin: auto;
+            gap: 40px;
+        }
+
+        .welcome-section {
+            flex: 1;
+            padding: 20px;
+            max-width: 600px;
+        }
+
+        .welcome-section h1 {
+            font-size: 2.5rem; /* Adjusted font size */
+            margin: 0;
+            color: #00796b;
+            font-weight: 600;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .welcome-section p {
+            margin: 20px 0;
+            font-size: 1.1rem; /* Slightly reduced font size */
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .image-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-section img {
+            max-width: 100%; /* Increased the max width */
+            height: auto; /* Maintains aspect ratio */
+            max-height: 400px; /* Adjusted height */
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .image-section img:hover {
+            transform: scale(1.05);
+        }
+
+        .feature-section {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 50px 20px;
+            border-radius: 15px;
+            margin-top: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .feature-section:hover {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        .feature-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #00796b;
+            font-weight: 600;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            justify-items: center;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 250px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-card img {
+            width: 70px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin: 10px 0;
+            font-size: 1.4rem;
+            color: #00796b;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: #777;
+        }
+
+        footer {
+            margin-top: auto;
+            background-color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+            font-size: 1rem;
+            color: #555;
+            border-top: 1px solid #ddd;
+            position: relative;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1>Welcome to the Order Management System</h1>
+            <p>Efficiently manage and track your orders, generate detailed reports, and gain insights into your business performance with our intuitive dashboard. Start managing your orders with ease today!</p>
+        </div>
+
+        <!-- Image Section -->
+        <div class="image-section">
+            <img src="{{ url_for('static', filename='images/glove.jpg') }}" alt="Order Management Illustration">
+        </div>
+    </div>
+
+    <!-- Feature Section -->
+    <div class="feature-section">
+        <h2>Explore Our Features</h2>
+        <div class="features">
+
+             <!-- View Orders -->
+             <div class="feature-card">
+                <a href="{{ url_for('view_orders') }}">
+                    <img src="{{ url_for('static', filename='images/vieworder.png') }}" alt="View Orders Icon">
+                    <h3>View Orders</h3>
+                </a>
+                <p>Check all your order details in an organized format.</p>
+            </div>
+            
+            <!-- Add Orders -->
+            <div class="feature-card">
+                <a href="{{ url_for('add_order') }}">
+                    <img src="{{ url_for('static', filename='images/addorder.png') }}" alt="Add Order Icon">
+                    <h3>Add Orders</h3>
+                </a>
+                <p>Quickly add new orders with all the necessary details.</p>
+            </div>
+
+            <!-- Generate Reports -->
+            <div class="feature-card">
+                <a href="{{ url_for('generate_report') }}">
+                    <img src="{{ url_for('static', filename='images/report.png') }}" alt="Report Icon">
+                    <h3>Generate Reports</h3>
+                </a>
+                <p>Analyze your order data with comprehensive reports.</p>
+            </div>
+
+            <!-- Dashboard -->
+            <div class="feature-card">
+                <a href="{{ url_for('dashboard') }}">
+                    <img src="{{ url_for('static', filename='images/dashboard.png') }}" alt="Dashboard Icon">
+                    <h3>Dashboard</h3>
+                </a>
+                <p>View all your orders and key statistics in one place.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Order Management System. All rights reserved.</p>
+    </footer>
+</body>
+</html>
